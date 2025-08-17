@@ -201,7 +201,7 @@ local function toggleDuty()
     TriggerServerEvent('police:server:UpdateBlips')
 end
 
----Sets up duty toggle, stash, armory using ox_target or zones.
+---Sets up duty toggle and armory using ox_target or zones.
 if config.useTarget then
     CreateThread(function()
         -- Duty points
