@@ -1,5 +1,14 @@
 local config       = require 'config.client'
 local sharedConfig = require 'config.shared'
+local treatments   = sharedConfig.treatments or {}
+
+local function categorizeInjury(label)
+    local lower = label:lower()
+    if lower:find('fract') or lower:find('broken') then return 'fracture' end
+    if lower:find('gunshot') or lower:find('bullet') then return 'gunshot' end
+    if lower:find('bleed') then return 'bleed' end
+    if lower:find('head') or lower:find('concussion') then return 'head' end
+end
 
 -- Safe animation fallbacks (used by TreatWounds/Revive flows)
 HealAnimDict = HealAnimDict or 'mini@cpr@char_a@cpr_str'
@@ -56,10 +65,20 @@ end)
 local function showTreatmentMenu(status)
     local statusMenu = {}
     for i = 1, #status do
-        statusMenu[i] = {
-            title = status[i],
-            event = 'hospital:client:TreatWounds',
-        }
+        local injury = status[i]
+        local category = categorizeInjury(injury)
+        if category and treatments[category] then
+            statusMenu[#statusMenu + 1] = {
+                title = ('%s (%s)'):format(injury, treatments[category].item),
+                event = 'hospital:client:TreatInjury',
+                args  = { type = category }
+            }
+        else
+            statusMenu[#statusMenu + 1] = {
+                title = injury,
+                event = 'hospital:client:TreatWounds',
+            }
+        end
     end
 
     lib.registerContext({
@@ -179,6 +198,45 @@ RegisterNetEvent('hospital:client:TreatWounds', function()
     if ok then
         lib.notify({ title = locale('success.helped_player'), type = 'success' })
         TriggerServerEvent('hospital:server:TreatWounds', GetPlayerServerId(player))
+    else
+        lib.notify({ title = locale('error.canceled'), type = 'error' })
+    end
+end)
+
+---Use specific medical item on nearest player.
+---@param data { type: string }
+RegisterNetEvent('hospital:client:TreatInjury', function(data)
+    local injuryType = data and data.type or data
+    local treatment  = treatments[injuryType]
+    if not treatment then return end
+
+    local hasItem = (exports.ox_inventory:Search('count', treatment.item) or 0) > 0
+    if hasItem == false or hasItem == 0 then
+        lib.notify({ title = locale('error.missing_item', treatment.item), type = 'error' })
+        return
+    end
+
+    local player = lib.getClosestPlayer(GetEntityCoords(cache.ped), 5.0)
+    if not player then
+        lib.notify({ title = locale('error.no_player'), type = 'error' })
+        return
+    end
+
+    local ok = lib.progressCircle({
+        duration   = 5000,
+        position   = 'bottom',
+        label      = locale(treatment.progress),
+        useWhileDead = false,
+        canCancel  = true,
+        disable    = { move = false, car = false, combat = true, mouse = false },
+        anim       = { dict = HealAnimDict, clip = HealAnim },
+    })
+
+    StopAnimTask(cache.ped, HealAnimDict, 'exit', 1.0)
+
+    if ok then
+        lib.notify({ title = locale('success.helped_player'), type = 'success' })
+        TriggerServerEvent('hospital:server:TreatInjury', GetPlayerServerId(player), injuryType)
     else
         lib.notify({ title = locale('error.canceled'), type = 'error' })
     end
