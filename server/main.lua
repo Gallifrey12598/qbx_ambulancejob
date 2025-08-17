@@ -295,12 +295,3 @@ RegisterNetEvent("QBCore:Everfall:EMSClockOut", function(_source)
     if not player then return end
     TriggerEvent('QBCore:Everfall:EMS:Timeclock', player, false)
 end)
-
-local function triggerEventOnEmsPlayer(src, event)
-    local player = exports.qbx_core:GetPlayer(src)
-    if player.PlayerData.job.type ~= 'ems' then
-        exports.qbx_core:Notify(src, locale('error.not_ems'), 'error')  -- ✅ server->client notify
-        return
-    end
-    TriggerClientEvent(event, src)
-end
