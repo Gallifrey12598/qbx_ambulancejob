@@ -14,6 +14,12 @@ jobs:
           capture: "junit.xml"
           args: "-t --formatter JUnit"
           extra_libs: ox_lib+mysql+qblocales+qbox+qbox_playerdata+qbox_lib
+      - name: Run tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.4 luarocks
+          sudo luarocks install busted
+          busted tests
       - name: Generate Lint Report
         if: always()
         uses: mikepenz/action-junit-report@v4
