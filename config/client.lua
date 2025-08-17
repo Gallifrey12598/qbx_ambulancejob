@@ -1,8 +1,10 @@
 return {
     useTarget = true,
     debugPoly = false,
-    painkillerInterval = 60, -- Time in minutes that painkillers last for
-    checkInHealTime = 20,    -- Time in seconds that it takes to be healed from the check-in system
-    laststandTimer = 300,    -- Time in seconds that the laststand timer lasts
-    aiHealTimer = 20,        -- How long it will take to be healed after checking in, in seconds
+
+    -- Ambulancejob-only timers (do not affect EF-Medical internals)
+    painkillerInterval = 60,   -- minutes painkillers last (ambulancejob client effects)
+    checkInHealTime    = 20,   -- seconds from check-in to healed (bed sequence timing)
+    aiHealTimer        = 20,   -- seconds NPC/auto heal duration (if used separately from checkInHealTime)
+    laststandTimer     = 300,  -- seconds for ambulancejob UI/logic; EF-Medical uses its own last-stand timer
 }

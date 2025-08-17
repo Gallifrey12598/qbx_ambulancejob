@@ -40,7 +40,7 @@
         "dr_alert": "Doctor has already been notified",
         "ems_report": "EMS Report",
         "message_sent": "Message to be sent",
-        "check_health": "Check a Players Health",
+        "check_health": "Check a Player's Health",
         "heal_player": "Heal a Player",
         "revive_player": "Revive a Player"
     },

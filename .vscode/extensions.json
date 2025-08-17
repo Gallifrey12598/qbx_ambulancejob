@@ -1,8 +1,10 @@
 {
     "recommendations": [
-        "sumneko.lua",
-        "overextended.cfxlua-vscode",
-        "ihyajb.qbcore-code-snippets",
-        "EditorConfig.EditorConfig",
+        "lua-language-server",          // successor to sumneko.lua (auto-complete, diagnostics, linting)
+        "overextended.cfxlua-vscode",   // FiveM/RedM natives + types
+        "ihyajb.qbcore-code-snippets",  // QBCore & Qbox snippets
+        "editorconfig.editorconfig",    // consistent formatting across editors
+        "eamodio.gitlens",              // (optional but useful) Git history & blame
+        "ms-vscode.vscode-typescript-next" // helps with Lua-to-TS interop in Qbox projects
     ]
 }

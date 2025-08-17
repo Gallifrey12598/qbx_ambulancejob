@@ -1,11 +1,34 @@
 {
-    "Lua.runtime.nonstandardSymbol": ["/**/", "`", "+=", "-=", "*=", "/="],
+    // Runtime settings
     "Lua.runtime.version": "Lua 5.4",
+    "Lua.runtime.nonstandardSymbol": ["/**/", "`", "+=", "-=", "*=", "/="],
+
+    // Diagnostics & globals
     "Lua.diagnostics.globals": [
-        "lib",
-        "cache",
-        "QBX",
-        "locale",
-        "qbx"
-    ]
+        "lib",      // ox_lib
+        "cache",    // ox_lib cache table
+        "QBX",      // qbx_core
+        "locale",   // ox_lib locale
+        "qbx",      // legacy lowercase reference
+        "vector3", "vector4", "vec", // FiveM natives
+        "Citizen", "RegisterNetEvent", "TriggerEvent",
+        "TriggerServerEvent", "RegisterCommand",
+        "CreateThread", "Wait", "PlayerPedId", "GetEntityCoords"
+    ],
+
+    // Workspace awareness
+    "Lua.workspace.checkThirdParty": false,
+    "Lua.workspace.library": [
+        "${workspaceFolder}/config",
+        "${workspaceFolder}/client",
+        "${workspaceFolder}/server",
+        "${workspaceFolder}/locales"
+    ],
+
+    // Intellisense & formatting
+    "Lua.completion.callSnippet": "Replace",
+    "Lua.format.defaultConfig": {
+        "indent_style": "space",
+        "indent_size": "4"
+    }
 }
