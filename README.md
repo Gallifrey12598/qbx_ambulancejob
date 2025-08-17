@@ -1,6 +1,11 @@
 # qb-ambulancejob
 EMS Job. See qbx_medical for medical system
 
+## Advanced Treatment
+EMS can assess patients and treat specific injuries using dedicated equipment.
+Splints, tourniquets and suture kits are now required to handle fractures,
+heavy bleeding and gunshot wounds, while painkillers help with head injuries.
+
 # Server.cfg Convar Update
 - Global DrawTextUi Option
 ```

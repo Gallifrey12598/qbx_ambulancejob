@@ -34,6 +34,9 @@ return {
                     { name = "bandage",                 price = 0, count = 50 },
                     { name = "painkillers",             price = 0, count = 50 },
                     { name = "firstaid",                price = 0, count = 50 },
+                    { name = "splint",                  price = 0, count = 50 },
+                    { name = "tourniquet",              price = 0, count = 50 },
+                    { name = "suturekit",               price = 0, count = 50 },
                     { name = "WEAPON_FLASHLIGHT",       price = 0, count = 50 },
                     { name = "WEAPON_FIREEXTINGUISHER", price = 0, count = 50 },
                     { name = "WEAPON_FLARE",            price = 0 },
@@ -120,4 +123,11 @@ return {
             { label = "Medical Center", coords = vector3(311.81, -583.92, 43.48) },  -- Pillbox
         }
     },
+
+    treatments = {
+        fracture = { item = 'splint',     progress = 'progress.splint' },
+        gunshot  = { item = 'suturekit',  progress = 'progress.suture' },
+        bleed    = { item = 'tourniquet', progress = 'progress.tourniquet' },
+        head     = { item = 'painkillers', progress = 'progress.head' },
+    }
 }

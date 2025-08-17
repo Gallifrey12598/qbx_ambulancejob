@@ -1,5 +1,6 @@
 local sharedConfig = require 'config.shared'
 local serverConfig = require 'config.server'
+local treatments   = sharedConfig.treatments or {}
 
 ---@alias source number
 
@@ -44,6 +45,30 @@ RegisterNetEvent('hospital:server:TreatWounds', function(playerId)
 
     -- Ask the target client to heal (full)
     lib.callback.await('qbx_medical:client:heal', playerId, 'full')
+end)
+
+---@param playerId number
+---@param injuryType string
+RegisterNetEvent('hospital:server:TreatInjury', function(playerId, injuryType)
+    local src = source
+    lib.print.debug('hospital:server:TreatInjury', playerId, injuryType)
+
+    if GetInvokingResource() then return end
+
+    local player  = exports.qbx_core:GetPlayer(src)
+    local patient = exports.qbx_core:GetPlayer(playerId)
+    if not player or not patient then return end
+    if player.PlayerData.job.type ~= 'ems' then return end
+
+    local treatment = treatments[injuryType]
+    if not treatment then return end
+
+    if not exports.ox_inventory:RemoveItem(src, treatment.item, 1) then
+        lib.print.warn(('hospital:server:TreatInjury called by %s but they did not have %s.'):format(src, treatment.item))
+        return
+    end
+
+    lib.callback.await('qbx_medical:client:heal', playerId, injuryType)
 end)
 
 local reviveCost    = sharedConfig.reviveCost

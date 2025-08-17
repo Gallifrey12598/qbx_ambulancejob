@@ -5,6 +5,7 @@
         "no_player": "No Player Nearby",
         "no_firstaid": "You need a First Aid Kit",
         "no_bandage": "You need a Bandage",
+        "missing_item": "You need a %s",
         "beds_taken": "Beds are occupied...",
         "possessions_taken": "All your possessions have been taken...",
         "cant_help": "You can't help this person...",
@@ -14,6 +15,7 @@
         "revived": "You revived a person",
         "healthy_player": "Player is Healthy",
         "helped_player": "You helped the person",
+        "treated": "You treated the patient",
         "being_helped": "You are being helped..."
     },
     "info": {
@@ -82,6 +84,10 @@
         "painkillers": "Taking Painkillers...",
         "revive": "Reviving Person...",
         "healing": "Healing Wounds...",
+        "splint": "Applying splint...",
+        "suture": "Treating gunshot wound...",
+        "tourniquet": "Stopping bleeding...",
+        "head": "Treating head injury...",
         "checking_in": "Checking in..."
     }
 }
